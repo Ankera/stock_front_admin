@@ -33,3 +33,19 @@ pnpm run build
 
 
 ```
+
+
+##### 组件之间通信
+```
+props
+custom event
+event bus
+v-modal
+useAttrs
+ref & $parent
+provide-inject
+pinia
+slot
+
+https://www.bilibili.com/video/BV1Xh411V7b5
+```
