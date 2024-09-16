@@ -19,7 +19,7 @@ import pinia from '@/store/index'
 import { isHasButton } from '@/directive/has'
 
 // 路由守卫
-// import './permission'
+import './permission'
 
 // 测试mock数据
 // import axios from 'axios'
@@ -68,7 +68,7 @@ app.mount('#app')
  * http://8.222.176.28/#/acl/user
  *
  * 源码地址
- * https://github.com/huccct/vue-admin/blob/main/src/api/product/trademark/index.ts
+ * https://github.com/huccct/Admin后台管理系统/blob/main/src/api/product/trademark/index.ts
  *
  * 059 - 101 未看，先看权限相关的课程
  */

@@ -21,7 +21,6 @@ const userStore = useUserStore(pinia)
  */
 router.beforeEach(async (to: any, _: unknown, next: any) => {
   document.title = to.meta.title + ` | ${setting.title}`
-
   nprogress.start()
 
   const token = userStore.token

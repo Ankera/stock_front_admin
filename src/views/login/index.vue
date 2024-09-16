@@ -8,7 +8,7 @@
       <el-col :span="12" :xs="0"></el-col>
       <el-col :span="12" :xs="24">
         <el-card class="login_form">
-          <h1>Vue-Admin</h1>
+          <h1>Admin后台管理系统</h1>
           <el-form :model="loginForm" :rules="rules" ref="loginForms">
             <el-form-item prop="username">
               <el-input
@@ -84,7 +84,7 @@ let loginForms = ref()
 
 const loginForm = reactive({
   username: 'admin',
-  password: 'atguigu123',
+  password: '111111',
   verifyCode: '1234',
 })
 

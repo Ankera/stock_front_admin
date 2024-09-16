@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --open",
-    "build": "vue-tsc && vite build",
+    "dev": "vite --open --mode development",
+    "build": "vue-tsc && vite build --mode production",
     "build:test": "vue-tsc && vite build --mode test",
     "build:prod": "vue-tsc && vite build --mode production",
     "preview": "vite preview",
@@ -24,6 +24,7 @@
     "element-plus": "^2.3.12",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.6",
+    "vite-plugin-html": "^3.2.2",
     "vue": "^3.3.4",
     "vue-demi": "^0.14.6",
     "vue-router": "^4.2.4"
