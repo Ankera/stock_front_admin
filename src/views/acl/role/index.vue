@@ -76,7 +76,7 @@
             编辑
           </el-button>
           <el-popconfirm
-            :title="`你确定要删除${row.rowName}?`"
+            :title="`你确定要删除${row.roleName}?`"
             width="260px"
             @confirm="removeRole(row.id)"
           >

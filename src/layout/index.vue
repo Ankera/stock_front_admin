@@ -6,7 +6,10 @@
   <div class="layout_container">
     <!-- 左侧菜单 -->
     <!-- 取消过度动画 -->
-    <div class="layout_slider">
+    <div
+      class="layout_slider"
+      :class="{ isCollapse: LayOutSettingStore.isCollapse ? true : false }"
+    >
       <Logo />
 
       <!-- 展示菜单 -->
@@ -74,7 +77,7 @@ export default {
     width: $base-menu-width;
     height: 100vh;
     background-color: $base-menu-background;
-    transition: all 0.3s;
+    transition: all 100ms ease-in-out;
 
     &.isCollapse {
       width: $base-menu-min-width;
@@ -95,7 +98,7 @@ export default {
     position: fixed;
     top: 0;
     left: $base-menu-width;
-    transition: all 0.3s;
+    transition: all 100ms ease-in-out;
     &.isCollapse {
       width: calc(100vw - $base-menu-min-width);
       left: $base-menu-min-width;
@@ -110,7 +113,7 @@ export default {
     left: $base-menu-width;
     padding: 12px 16px;
     overflow: auto;
-    transition: all 0.3s;
+    transition: all 100ms ease-in-out;
     &.isCollapse {
       width: calc(100vw - $base-menu-min-width);
       left: $base-menu-min-width;

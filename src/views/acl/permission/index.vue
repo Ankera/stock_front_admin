@@ -7,6 +7,7 @@
     row-key="id"
     border
     :data="PermissionArr"
+    default-expand-all
   >
     <el-table-column prop="name" label="名称" />
     <el-table-column prop="code" label="权限值" />

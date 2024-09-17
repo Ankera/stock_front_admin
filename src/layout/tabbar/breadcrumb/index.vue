@@ -4,7 +4,7 @@
 
 <template>
   <!-- 顶部左侧静态 -->
-  <el-icon style="margin-right: 10px" @click="changeIcon">
+  <el-icon style="margin-right: 10px; cursor: pointer" @click="changeIcon">
     <component :is="layOutSettingStore.isCollapse ? Expand : Fold"></component>
   </el-icon>
 
