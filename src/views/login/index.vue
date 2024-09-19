@@ -76,7 +76,7 @@ const $route = useRoute()
 
 let loading = ref(false)
 
-const identifyCode = ref('1234')
+const identifyCode = ref('5566')
 
 const userStore = useUserStore()
 
@@ -84,8 +84,9 @@ let loginForms = ref()
 
 const loginForm = reactive({
   username: 'admin',
-  password: '111111',
-  verifyCode: '1234',
+  password: '123456',
+  code: '5566',
+  verifyCode: '5566',
 })
 
 const login = async () => {
@@ -95,7 +96,6 @@ const login = async () => {
   loading.value = true
   try {
     await userStore.userLogin(loginForm)
-
     // 如果退出登录时，判断是否回到原地址
     const redirect = $route.query.redirect
     $router.push({ path: redirect || '/' })

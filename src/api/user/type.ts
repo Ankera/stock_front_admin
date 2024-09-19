@@ -8,6 +8,7 @@ export interface LoginFormData {
 export interface ResponseData {
   code?: number
   message?: string
+  msg?: string
   ok?: boolean
 }
 
@@ -22,5 +23,6 @@ export interface UserInfoResponseData extends ResponseData {
     roles: string[]
     name: string
     avatar: string
+    [key: string]: any
   }
 }

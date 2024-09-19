@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { reqLogin, reqUserInfo, reqLogOut } from '@/api/user'
+import { reqLogin, reqUserInfo } from '@/api/user'
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 import type {
   LoginFormData,
@@ -57,26 +57,27 @@ const useUserStore = defineStore('User', {
   actions: {
     async userLogin(data: LoginFormData) {
       const result: LoginResponseData = await reqLogin(data)
-      if (result.code === 200) {
-        this.token = result?.data as string
-        SET_TOKEN(result?.data as string)
+      if (result.code === 1) {
+        const newToken = 'admin token'
+        this.token = newToken
+        SET_TOKEN(newToken)
 
         return 'ok'
       } else {
         REMOVE_TOKEN()
-        return Promise.reject(new Error(result.message))
+        return Promise.reject(new Error(result.message || result.msg))
       }
     },
 
     async userInfo() {
       const result: UserInfoResponseData = await reqUserInfo()
-      if (result.code === 200) {
-        this.username = result.data.name
-        this.avatar = result.data.avatar
-        this.buttons = result.data.buttons
+      if (result.code === 1) {
+        this.username = result.data.nickName
+        this.avatar = result.data.avatar || '/vite.svg'
+        this.buttons = result.data.buttons || []
         const userAsyncRoute: any = filterAsyncRoute(
           deepClone(asyncRoute),
-          result.data.routes,
+          result.data.routes || [],
         )
         // 路由集合
         this.menuRoutes = [...constantRoutes, ...userAsyncRoute, anyRoute]
@@ -91,18 +92,21 @@ const useUserStore = defineStore('User', {
     },
 
     async userLogout() {
-      const result: any = await reqLogOut()
-      if (result.code === 200) {
-        // 退出登录接口，标识本地token无效， 服务器处理
-        this.token = ''
-        this.username = ''
-        this.avatar = ''
-        REMOVE_TOKEN()
-
-        return 'ok'
-      } else {
-        return Promise.reject(new Error(result.message))
-      }
+      // const result: any = await reqLogOut()
+      // if (result.code === 200) {
+      //   // 退出登录接口，标识本地token无效， 服务器处理
+      //   this.token = ''
+      //   this.username = ''
+      //   this.avatar = ''
+      //   REMOVE_TOKEN()
+      //   return 'ok'
+      // } else {
+      //   return Promise.reject(new Error(result.message || result.msg))
+      // }
+      this.token = ''
+      this.username = ''
+      this.avatar = ''
+      REMOVE_TOKEN()
     },
   },
   getters: {},
