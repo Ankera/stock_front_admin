@@ -74,7 +74,12 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
           changeOrigin: true,
 
           // 路径重写
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          // rewrite: (path) => path.replace(/^\/dev/, ''),
+          rewrite: (path) => {
+            const baseApi = env.VITE_APP_BASE_API.replace(/\//g, '\\/') // 将斜杠转义
+            const regex = new RegExp(`^${baseApi}`)
+            return path.replace(regex, '')
+          },
         },
       },
     },

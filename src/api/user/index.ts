@@ -9,8 +9,9 @@ import type {
 
 //项目用户相关的请求地址
 enum API {
-  LOGIN_URL = '/user/login',
-  USERINFO_URL = '/user/info?username=admin',
+  LOGIN_URL = '/api/user/login',
+  USERINFO_URL = '/api/user/info?username=admin',
+  LOGIN_CODE = '/api/captcha',
   LOGOUT_URL = '/admin/acl/index/logout',
 }
 
@@ -24,3 +25,5 @@ export const reqUserInfo = () =>
 
 // 退出登录
 export const reqLogOut = () => request.post<any, any>(API.LOGOUT_URL)
+
+export const reqCode = () => request.get(API.LOGIN_CODE)

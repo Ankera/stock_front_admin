@@ -8,7 +8,7 @@
       <el-col :span="12" :xs="0"></el-col>
       <el-col :span="12" :xs="24">
         <el-card class="login_form">
-          <h1>Admin后台管理系统</h1>
+          <h1>Admin后台管理</h1>
           <el-form :model="loginForm" :rules="rules" ref="loginForms">
             <el-form-item prop="username">
               <el-input
@@ -45,6 +45,7 @@
               </el-input>
             </el-form-item>
           </el-form>
+          <img class="img_code" :src="image" alt="" />
           <el-form-item>
             <el-button
               :loading="loading"
@@ -64,16 +65,18 @@
 
 <script setup lang="ts">
 import { User, Lock, Warning } from '@element-plus/icons-vue'
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { getTime } from '@/utils/time'
 import { ElNotification } from 'element-plus'
 import useUserStore from '@/store/modules/user'
+import { reqCode } from '@/api/user/index'
 // 获取路由
 const $router = useRouter()
 
 const $route = useRoute()
 
+let image = ref()
 let loading = ref(false)
 
 const identifyCode = ref('5566')
@@ -81,6 +84,16 @@ const identifyCode = ref('5566')
 const userStore = useUserStore()
 
 let loginForms = ref()
+
+onMounted(() => {
+  const imageCodePrefix = 'data:image/jpg;base64,'
+
+  reqCode().then((res: any) => {
+    if (+res.code === 1) {
+      image.value = imageCodePrefix + res.data.imageData
+    }
+  })
+})
 
 const loginForm = reactive({
   username: 'admin',
@@ -169,4 +182,11 @@ const rules = {
 
 <style scoped>
 @import './index.scss';
+
+.img_code {
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
 </style>
