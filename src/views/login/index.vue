@@ -8,7 +8,7 @@
       <el-col :span="12" :xs="0"></el-col>
       <el-col :span="12" :xs="24">
         <el-card class="login_form">
-          <h1>Admin后台管理</h1>
+          <h1>今日指数后台管理</h1>
           <el-form :model="loginForm" :rules="rules" ref="loginForms">
             <el-form-item prop="username">
               <el-input
@@ -30,12 +30,11 @@
                 clearable
               ></el-input>
             </el-form-item>
-            <el-form-item prop="verifyCode">
+            <el-form-item prop="code">
               <el-input
                 :prefix-icon="Warning"
-                show-password
-                v-model="loginForm.verifyCode"
-                placeholder="VerifyCode"
+                v-model="loginForm.code"
+                placeholder="验证码"
                 size="large"
                 maxlength="4"
               >
@@ -79,11 +78,16 @@ const $route = useRoute()
 let image = ref()
 let loading = ref(false)
 
-const identifyCode = ref('5566')
-
 const userStore = useUserStore()
 
 let loginForms = ref()
+
+const loginForm = reactive({
+  username: 'admin',
+  password: '123456',
+  code: '',
+  sessionId: '',
+})
 
 onMounted(() => {
   const imageCodePrefix = 'data:image/jpg;base64,'
@@ -91,15 +95,9 @@ onMounted(() => {
   reqCode().then((res: any) => {
     if (+res.code === 1) {
       image.value = imageCodePrefix + res.data.imageData
+      loginForm.sessionId = res.data.sessionId
     }
   })
-})
-
-const loginForm = reactive({
-  username: 'admin',
-  password: '123456',
-  code: '5566',
-  verifyCode: '5566',
 })
 
 const login = async () => {
@@ -147,13 +145,18 @@ const validatorPassword = (_: unknown, value: any, callback: any) => {
 }
 
 const validatorVerifyCode = (_: unknown, value: any, callback: any) => {
+  // if (value.length === 0) {
+  //   callback(new Error('请输入验证码'))
+  // } else if (value.length < 4) {
+  //   callback(new Error('请输入正确的验证码'))
+  // } else if (identifyCode.value !== value) {
+  //   callback(new Error('请输入正确的验证码'))
+  // } else if (identifyCode.value === value) {
+  //   callback()
+  // }
   if (value.length === 0) {
     callback(new Error('请输入验证码'))
-  } else if (value.length < 4) {
-    callback(new Error('请输入正确的验证码'))
-  } else if (identifyCode.value !== value) {
-    callback(new Error('请输入正确的验证码'))
-  } else if (identifyCode.value === value) {
+  } else {
     callback()
   }
 }

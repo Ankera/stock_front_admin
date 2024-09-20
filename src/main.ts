@@ -70,7 +70,7 @@ app.mount('#app')
  * http://8.222.176.28/#/acl/user
  *
  * 源码地址
- * https://github.com/huccct/Admin后台管理/blob/main/src/api/product/trademark/index.ts
+ * https://github.com/huccct/今日指数后台管理/blob/main/src/api/product/trademark/index.ts
  *
  * 059 - 101 未看，先看权限相关的课程
  */

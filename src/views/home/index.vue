@@ -7,8 +7,8 @@
     <div class="box">
       <img :src="userStore.avatar" alt="" class="avatar" />
       <div class="bottom">
-        <h3 class="title">{{ getTime() }}好呀{{ userStore.username }}</h3>
-        <p class="subtitle">硅谷甄选运营平台</p>
+        <h3 class="title">{{ getTime() }}好呀: {{ userStore.username }}</h3>
+        <p class="subtitle">今日指数运营平台</p>
       </div>
     </div>
   </el-card>
