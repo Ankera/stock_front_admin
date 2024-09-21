@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { getInnerMarketInfo, getSectorAll } from '@/api/stock/index'
+import { getInnerMarketInfo, getSectorIndustry } from '@/api/stock/index'
 import { onMounted, ref } from 'vue'
 
 const marketInfoTable = ref([])
@@ -57,7 +57,7 @@ onMounted(() => {
     }
   })
 
-  getSectorAll().then((res) => {
+  getSectorIndustry().then((res) => {
     if (res.code === 1) {
       stockAllTable.value = res.data
     }

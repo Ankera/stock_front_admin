@@ -166,6 +166,15 @@ export const constantRoutes = [
         },
       },
       {
+        path: '/stock/trade',
+        component: () => import('@/views/stock/trade/index.vue'),
+        name: 'StockTrade',
+        meta: {
+          title: '股票交易榜',
+          icon: 'Flag',
+        },
+      },
+      {
         path: '/stock/detail',
         component: () => import('@/views/stock/detail/index.vue'),
         name: 'StockDetail',
