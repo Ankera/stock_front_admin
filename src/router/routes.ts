@@ -145,6 +145,37 @@ export const constantRoutes = [
       icon: 'Platform',
     },
   },
+  {
+    path: '/stock',
+    component: () => import('@/layout/index.vue'),
+    name: 'Stock',
+    meta: {
+      title: '股票管理',
+      hidden: false,
+      icon: 'Present',
+    },
+    redirect: '/stock/home',
+    children: [
+      {
+        path: '/stock/home',
+        component: () => import('@/views/stock/home/index.vue'),
+        name: 'StockHome',
+        meta: {
+          title: '股票首页',
+          icon: 'Soccer',
+        },
+      },
+      {
+        path: '/stock/detail',
+        component: () => import('@/views/stock/detail/index.vue'),
+        name: 'StockDetail',
+        meta: {
+          title: '股票详情',
+          icon: 'ReadingLamp',
+        },
+      },
+    ],
+  },
   // 权限管理 和 商品管理 集合
   // ...asyncRoute,
   {
