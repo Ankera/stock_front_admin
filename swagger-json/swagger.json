@@ -1,238 +1,592 @@
 {
-  "swagger": "2.0",
-  "info": {
-      "description": "这是一个方便前后端开发人员快速了解开发接口需求的在线接口API文档",
-      "version": "1.0.0",
-      "title": "今日指数-在线接口API文档",
-      "contact": {
-          "name": "子木Github",
-          "url": "https://github.com/ankera",
-          "email": "15189120919@163.com"
-      }
-  },
-  "host": "192.168.31.237:8091",
-  "basePath": "/",
-  "tags": [
-      {
-          "name": "用户相关接口服务",
-          "description": "User Controller"
-      }
-  ],
-  "paths": {
-      "/api/captcha": {
-          "get": {
-              "tags": [
-                  "用户相关接口服务"
-              ],
-              "summary": "生成图片获取验证码",
-              "operationId": "getCheckCodeUsingGET",
-              "produces": [
-                  "*/*"
-              ],
-              "responses": {
-                  "200": {
-                      "description": "OK",
-                      "schema": {
-                          "$ref": "#/definitions/R«Map»"
-                      }
-                  },
-                  "401": {
-                      "description": "Unauthorized"
-                  },
-                  "403": {
-                      "description": "Forbidden"
-                  },
-                  "404": {
-                      "description": "Not Found"
-                  }
-              },
-              "deprecated": false,
-              "x-order": "2147483647"
-          }
-      },
-      "/api/user/info": {
-          "get": {
-              "tags": [
-                  "用户相关接口服务"
-              ],
-              "summary": "根据用户名查询用户信息",
-              "operationId": "getUserByUsernameUsingGET",
-              "produces": [
-                  "*/*"
-              ],
-              "parameters": [
-                  {
-                      "name": "name",
-                      "in": "query",
-                      "description": "用户名",
-                      "required": true,
-                      "type": "string"
-                  }
-              ],
-              "responses": {
-                  "200": {
-                      "description": "OK",
-                      "schema": {
-                          "$ref": "#/definitions/R«object»"
-                      }
-                  },
-                  "401": {
-                      "description": "Unauthorized"
-                  },
-                  "403": {
-                      "description": "Forbidden"
-                  },
-                  "404": {
-                      "description": "Not Found"
-                  }
-              },
-              "deprecated": false,
-              "x-order": "2147483647"
-          }
-      },
-      "/api/user/login": {
-          "post": {
-              "tags": [
-                  "用户相关接口服务"
-              ],
-              "summary": "用户登录",
-              "operationId": "loginUsingPOST",
-              "consumes": [
-                  "application/json"
-              ],
-              "produces": [
-                  "*/*"
-              ],
-              "parameters": [
-                  {
-                      "in": "body",
-                      "name": "vo",
-                      "description": "vo",
-                      "required": true,
-                      "schema": {
-                          "$ref": "#/definitions/LoginReqVo"
-                      }
-                  }
-              ],
-              "responses": {
-                  "200": {
-                      "description": "OK",
-                      "schema": {
-                          "$ref": "#/definitions/R«登录响应体数据封装»"
-                      }
-                  },
-                  "201": {
-                      "description": "Created"
-                  },
-                  "401": {
-                      "description": "Unauthorized"
-                  },
-                  "403": {
-                      "description": "Forbidden"
-                  },
-                  "404": {
-                      "description": "Not Found"
-                  }
-              },
-              "deprecated": false,
-              "x-order": "2147483647"
-          }
-      }
-  },
-  "definitions": {
-      "LoginReqVo": {
-          "type": "object",
-          "properties": {
-              "code": {
-                  "type": "string",
-                  "description": "验证码"
-              },
-              "password": {
-                  "type": "string",
-                  "description": "密码"
-              },
-              "sessionId": {
-                  "type": "string",
-                  "description": "sessionId"
-              },
-              "username": {
-                  "type": "string",
-                  "description": "用户名"
-              }
-          },
-          "title": "LoginReqVo",
-          "description": "登录信息请求体"
-      },
-      "R«Map»": {
-          "type": "object",
-          "properties": {
-              "code": {
-                  "type": "integer",
-                  "format": "int32"
-              },
-              "data": {
-                  "type": "object"
-              },
-              "msg": {
-                  "type": "string"
-              }
-          },
-          "title": "R«Map»"
-      },
-      "R«object»": {
-          "type": "object",
-          "properties": {
-              "code": {
-                  "type": "integer",
-                  "format": "int32"
-              },
-              "data": {
-                  "type": "object"
-              },
-              "msg": {
-                  "type": "string"
-              }
-          },
-          "title": "R«object»"
-      },
-      "R«登录响应体数据封装»": {
-          "type": "object",
-          "properties": {
-              "code": {
-                  "type": "integer",
-                  "format": "int32"
-              },
-              "data": {
-                  "$ref": "#/definitions/登录响应体数据封装"
-              },
-              "msg": {
-                  "type": "string"
-              }
-          },
-          "title": "R«登录响应体数据封装»"
-      },
-      "登录响应体数据封装": {
-          "type": "object",
-          "properties": {
-              "id": {
-                  "type": "integer",
-                  "format": "int64",
-                  "description": "主键ID"
-              },
-              "nickName": {
-                  "type": "string",
-                  "description": "昵称"
-              },
-              "phone": {
-                  "type": "string",
-                  "description": "电话"
-              },
-              "username": {
-                  "type": "string",
-                  "description": "用户名"
-              }
-          },
-          "title": "登录响应体数据封装"
-      }
-  }
+    "swagger": "2.0",
+    "info": {
+        "description": "这是一个方便前后端开发人员快速了解开发接口需求的在线接口API文档",
+        "version": "1.0.0",
+        "title": "今日指数-在线接口API文档",
+        "contact": {
+            "name": "子木Github",
+            "url": "https://github.com/ankera",
+            "email": "15189120919@163.com"
+        }
+    },
+    "host": "localhost:8091",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "定义股票相关控制器",
+            "description": "Stock Controller"
+        },
+        {
+            "name": "用户相关接口服务",
+            "description": "User Controller"
+        }
+    ],
+    "paths": {
+        "/api/captcha": {
+            "get": {
+                "tags": [
+                    "用户相关接口服务"
+                ],
+                "summary": "生成图片获取验证码",
+                "operationId": "getCheckCodeUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/R«Map»"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false,
+                "x-order": "2147483647"
+            }
+        },
+        "/api/quot/index/all": {
+            "get": {
+                "tags": [
+                    "定义股票相关控制器"
+                ],
+                "summary": "获取国内大盘最新的数据",
+                "description": "获取国内大盘最新的数据",
+                "operationId": "getInnerMarketInfoUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/R«List«InnerMarketDomain»»"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false,
+                "x-order": "2147483647"
+            }
+        },
+        "/api/quot/sector/all": {
+            "get": {
+                "tags": [
+                    "定义股票相关控制器"
+                ],
+                "summary": "根据分页查询最新股票交易数据",
+                "description": "根据分页查询最新股票交易数据",
+                "operationId": "getSectorInfoByPageUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "1",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "20",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/R«List«PageResult«StockUpDownDomain»»»"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false,
+                "x-order": "2147483647"
+            }
+        },
+        "/api/quot/sector/industry": {
+            "get": {
+                "tags": [
+                    "定义股票相关控制器"
+                ],
+                "summary": "国内板块指数业务分析",
+                "description": "国内板块指数业务分析",
+                "operationId": "getSectorIndustryUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/R«List«StockBlockDomain»»"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false,
+                "x-order": "2147483647"
+            }
+        },
+        "/api/user/info": {
+            "get": {
+                "tags": [
+                    "用户相关接口服务"
+                ],
+                "summary": "根据用户名查询用户信息",
+                "operationId": "getUserByUsernameUsingGET",
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "用户名",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/R«object»"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false,
+                "x-order": "2147483647"
+            }
+        },
+        "/api/user/login": {
+            "post": {
+                "tags": [
+                    "用户相关接口服务"
+                ],
+                "summary": "用户登录",
+                "operationId": "loginUsingPOST",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "vo",
+                        "description": "vo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/LoginReqVo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/R«登录响应体数据封装»"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "deprecated": false,
+                "x-order": "2147483647"
+            }
+        }
+    },
+    "definitions": {
+        "InnerMarketDomain": {
+            "type": "object",
+            "properties": {
+                "amplitude": {
+                    "type": "number",
+                    "description": "振幅"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "大盘编码"
+                },
+                "curPoint": {
+                    "type": "number",
+                    "description": "当前点"
+                },
+                "curTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "当前时间"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "指数名称"
+                },
+                "openPoint": {
+                    "type": "number",
+                    "description": "开盘点"
+                },
+                "preClosePoint": {
+                    "type": "number",
+                    "description": "前收盘点"
+                },
+                "rose": {
+                    "type": "number",
+                    "description": "涨幅"
+                },
+                "tradeAmt": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "交易量"
+                },
+                "tradeVol": {
+                    "type": "number",
+                    "description": "交易金额"
+                },
+                "upDown": {
+                    "type": "number",
+                    "description": "涨跌值"
+                }
+            },
+            "title": "InnerMarketDomain"
+        },
+        "LoginReqVo": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "验证码"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "密码"
+                },
+                "sessionId": {
+                    "type": "string",
+                    "description": "sessionId"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "用户名"
+                }
+            },
+            "title": "LoginReqVo",
+            "description": "登录信息请求体"
+        },
+        "PageResult«StockUpDownDomain»": {
+            "type": "object",
+            "properties": {
+                "pageNum": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "当前第几页"
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "每页记录数"
+                },
+                "rows": {
+                    "type": "array",
+                    "description": "结果集",
+                    "items": {
+                        "$ref": "#/definitions/StockUpDownDomain"
+                    }
+                },
+                "size": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "当前页记录数"
+                },
+                "totalPages": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "总页数"
+                },
+                "totalRows": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "总记录数"
+                }
+            },
+            "title": "PageResult«StockUpDownDomain»"
+        },
+        "R«List«InnerMarketDomain»»": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/InnerMarketDomain"
+                    }
+                },
+                "msg": {
+                    "type": "string"
+                }
+            },
+            "title": "R«List«InnerMarketDomain»»"
+        },
+        "R«List«PageResult«StockUpDownDomain»»»": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PageResult«StockUpDownDomain»"
+                    }
+                },
+                "msg": {
+                    "type": "string"
+                }
+            },
+            "title": "R«List«PageResult«StockUpDownDomain»»»"
+        },
+        "R«List«StockBlockDomain»»": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/StockBlockDomain"
+                    }
+                },
+                "msg": {
+                    "type": "string"
+                }
+            },
+            "title": "R«List«StockBlockDomain»»"
+        },
+        "R«Map»": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "data": {
+                    "type": "object"
+                },
+                "msg": {
+                    "type": "string"
+                }
+            },
+            "title": "R«Map»"
+        },
+        "R«object»": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "data": {
+                    "type": "object"
+                },
+                "msg": {
+                    "type": "string"
+                }
+            },
+            "title": "R«object»"
+        },
+        "R«登录响应体数据封装»": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "data": {
+                    "$ref": "#/definitions/登录响应体数据封装"
+                },
+                "msg": {
+                    "type": "string"
+                }
+            },
+            "title": "R«登录响应体数据封装»"
+        },
+        "StockBlockDomain": {
+            "type": "object",
+            "properties": {
+                "avgPrice": {
+                    "type": "number",
+                    "description": "平均价"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "板块编码"
+                },
+                "companyNum": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "公司数量"
+                },
+                "curDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "当前日期"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "板块名称"
+                },
+                "tradeAmt": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "交易量"
+                },
+                "tradeVol": {
+                    "type": "number",
+                    "description": "交易金额"
+                },
+                "upDownRate": {
+                    "type": "number",
+                    "description": "涨跌率"
+                }
+            },
+            "title": "StockBlockDomain"
+        },
+        "StockUpDownDomain": {
+            "type": "object",
+            "properties": {
+                "amplitude": {
+                    "type": "number",
+                    "description": "振幅"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "股票编码"
+                },
+                "curDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "日期"
+                },
+                "increase": {
+                    "type": "number",
+                    "description": "涨跌"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "股票名称"
+                },
+                "preClosePrice": {
+                    "type": "number",
+                    "description": "前收盘点"
+                },
+                "tradeAmt": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "交易量"
+                },
+                "tradePrice": {
+                    "type": "number",
+                    "description": "当前价格"
+                },
+                "tradeVol": {
+                    "type": "number",
+                    "description": "交易金额"
+                },
+                "upDown": {
+                    "type": "number",
+                    "description": "涨幅"
+                }
+            },
+            "title": "StockUpDownDomain"
+        },
+        "登录响应体数据封装": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "主键ID"
+                },
+                "nickName": {
+                    "type": "string",
+                    "description": "昵称"
+                },
+                "phone": {
+                    "type": "string",
+                    "description": "电话"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "用户名"
+                }
+            },
+            "title": "登录响应体数据封装"
+        }
+    }
 }

@@ -175,6 +175,15 @@ export const constantRoutes = [
         },
       },
       {
+        path: '/stock/upDown',
+        component: () => import('@/views/stock/upDown/index.vue'),
+        name: 'StockUpDown',
+        meta: {
+          title: '涨停跌停',
+          icon: 'Sunny',
+        },
+      },
+      {
         path: '/stock/detail',
         component: () => import('@/views/stock/detail/index.vue'),
         name: 'StockDetail',
