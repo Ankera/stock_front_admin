@@ -3,7 +3,15 @@
 <!-- 模块主要作用:  -->
 
 <template>
-  <el-alert title="涨幅版" type="success" effect="dark" :closable="false" />
+  <el-alert
+    title="股票涨跌信息"
+    type="success"
+    effect="dark"
+    :closable="false"
+  />
+  <div class="export">
+    <el-button type="primary" @click="handleExport">导出Execl</el-button>
+  </div>
   <el-table :data="tableData.rows || []" style="width: 100%">
     <el-table-column type="index" width="50" />
     <el-table-column prop="code" label="代码" />
@@ -31,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { getSectorAll } from '@/api/stock/index'
+import { getStockAll } from '@/api/stock/index'
 import { onMounted, ref } from 'vue'
 
 const currentPage = ref(1) // 当前页码
@@ -42,23 +50,48 @@ const tableData = ref({
 })
 
 onMounted(() => {
-  getSectorAll(currentPage.value, pageSize.value).then((res) => {
+  getStockAll(currentPage.value, pageSize.value).then((res) => {
     if (+res.code === 1) {
-      tableData.value.rows = res.data[0].rows
-      totalRows.value = res.data[0].totalRows
+      tableData.value.rows = res.data.rows
+      totalRows.value = res.data.totalRows
     }
   })
 })
 
 const handleChange = (p: any) => {
   currentPage.value = p
-  getSectorAll(currentPage.value, pageSize.value).then((res) => {
+  getStockAll(currentPage.value, pageSize.value).then((res) => {
     if (+res.code === 1) {
-      tableData.value.rows = res.data[0].rows
-      totalRows.value = res.data[0].totalRows
+      tableData.value.rows = res.data.rows
+      totalRows.value = res.data.totalRows
     }
   })
 }
+
+const handleExport = () => {
+  window.open(
+    `http://127.0.0.1:8091/api/quot/stock/export?page=${currentPage.value}&pageSize=${pageSize.value}`,
+  )
+  // stockExport(currentPage.value, pageSize.value).then((res) => {
+  //   console.log(res, '下载......')
+  //   const link = document.createElement('a')
+  //   const blob = new Blob([res.data], {
+  //     type: 'application/vnd.ms-excel;charset=utf-8',
+  //   })
+  //   link.style.display = 'none'
+  //   link.href = URL.createObjectURL(blob)
+  //   link.setAttribute('download', `股票涨幅信息表.xlsx`)
+  //   document.body.appendChild(link)
+  //   link.click()
+  //   document.body.removeChild(link)
+  // })
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.export {
+  display: flex;
+  justify-content: end;
+  margin: 16px 0;
+}
+</style>
