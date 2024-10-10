@@ -19,6 +19,15 @@
   <el-divider />
   <el-alert title="个股涨跌" type="success" effect="dark" :closable="false" />
   <div class="echarts" ref="upDownRangeRef"></div>
+
+  <el-divider />
+  <el-alert
+    title="指定股票T分时数据"
+    type="warning"
+    effect="dark"
+    :closable="false"
+  />
+  <div class="echarts" ref="timeSharingRef"></div>
 </template>
 
 <script setup lang="ts">
@@ -26,6 +35,7 @@ import {
   quotStockUpdownCount,
   getCompareStockTradeAmt,
   getIncreaseRange,
+  getStockScreenTimeSharing,
 } from '@/api/stock/index'
 import { ref, onMounted } from 'vue'
 import * as echarts from 'echarts'
@@ -38,6 +48,10 @@ const moneyEChartReturn = ref()
 
 const upDownRangeRef = ref()
 const upDownRangeReturn = ref()
+
+const maxIntervalData = ref(0)
+const timeSharingRef = ref()
+const timeSharingReturn = ref()
 
 const initUDEcharts = () => {
   UDEChartReturn.value = echarts.init(UDEchartsRef.value)
@@ -379,12 +393,166 @@ const initUpDownRangeEChart = () => {
   })
 }
 
+const timeSharing = () => {
+  getStockScreenTimeSharing('600021').then((res) => {
+    if (+res.code === 1) {
+      const data = res.data
+      let lineData: any = []
+      let barData: any = []
+      let xAxisData = []
+      if (data[0] && data[0].openPrice) {
+        maxIntervalData.value = data[0].openPrice * 1
+      } else {
+        maxIntervalData.value = 0
+      }
+
+      data.forEach((item: any) => {
+        lineData.push(item.tradePrice)
+        xAxisData.push(item.date)
+        barData.push({
+          preClosePrice: item.preClosePrice,
+          openPrice: item.openPrice,
+          value: item.tradeVol,
+        })
+      })
+      for (let i = 0; i < 120 - data.length; i++) {
+        xAxisData.push(null)
+      }
+      timeSharingReturn.value.setOption({
+        xAxis: {
+          data: xAxisData,
+        },
+        series: [
+          {
+            data: lineData,
+          },
+        ],
+      })
+
+      // setInterval(() => {
+      //   timeSharing()
+      // }, 60 * 1000)
+    }
+  })
+}
+
+const initTimeSharingEChart = () => {
+  timeSharingReturn.value = echarts.init(timeSharingRef.value)
+
+  let maxInterval = maxIntervalData.value
+  timeSharingReturn.value.setOption({
+    xAxis: {
+      type: 'category',
+      data: new Array(240),
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: '#FE1919',
+          opacity: 0.1,
+        },
+      },
+      splitLine: {
+        show: true,
+        lineStyle: {
+          color: ['#FE1919'],
+          width: 1,
+          type: 'dashed',
+          opacity: 0.1,
+        },
+      },
+      axisTick: {
+        show: false,
+      },
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        animation: false,
+        type: 'cross',
+        lineStyle: {
+          color: '#376df4',
+          width: 2,
+          opacity: 1,
+        },
+      },
+      formatter: function (data: any) {
+        let datas = data[0]
+        return [
+          '' + datas.name + '<hr size=1 style="margin: 3px 0">',
+          '最新价: ' + datas.value + '<br/>',
+        ].join('')
+      },
+    },
+    grid: {
+      left: '0',
+      right: '80px',
+      top: '20px',
+      bottom: '1%',
+      show: true,
+      borderColor: 'transparent',
+      backgroundColor: '#000000',
+    },
+    yAxis: {
+      show: true,
+      type: 'value',
+      position: 'right',
+      splitLine: {
+        show: true,
+        lineStyle: {
+          color: ['#FE1919'],
+          width: 2,
+          opacity: 1,
+        },
+      },
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: '#FE1919',
+          opacity: 1,
+        },
+      },
+      axisTick: {
+        show: false,
+      },
+      min: function () {
+        return maxInterval - maxInterval * 0.5
+      },
+      max: function () {
+        return maxInterval + maxInterval * 0.5
+      },
+      maxInterval: maxInterval * 0.1,
+      axisLabel: {
+        formatter: function (value: any) {
+          return value.toFixed(2)
+        },
+      },
+    },
+    series: [
+      {
+        type: 'line',
+        smooth: false,
+        symbol: 'none',
+        lineStyle: {
+          color: '#ffffff',
+        },
+        itemStyle: {
+          borderColor: '#ffffff',
+        },
+      },
+    ],
+  })
+
+  timeSharing()
+}
+
 onMounted(() => {
   initUDEcharts()
 
   initMoneyEChart()
 
   initUpDownRangeEChart()
+
+  initTimeSharingEChart()
 })
 </script>
 
